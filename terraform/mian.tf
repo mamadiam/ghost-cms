@@ -32,7 +32,6 @@ resource "aws_eks_cluster" "main" {
   vpc_config {
     subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
   }
-}
 
   depends_on = [
     aws_iam_role.eks_role_2,
@@ -61,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
 }
 
 resource "aws_iam_user" "new_user_2" {
-  name = "GhostUser_3"
+  name = "GhostUser_4"
 
   lifecycle {
     create_before_destroy = true
