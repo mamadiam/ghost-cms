@@ -58,3 +58,34 @@ resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
 resource "aws_iam_user" "new_user" {
   name = "GhostUser"
 }
+
+
+resource "aws_iam_access_key" "AccK" {
+  user = aws_iam_user.new_user.name
+}
+
+output "secret_key" {
+  value     = aws_iam_access_key.AccK.secret
+  sensitive = true
+}
+
+output "access_key" {
+  value = aws_iam_access_key.AccK.id
+}
+
+resource "aws_iam_user_policy" "iam" {
+  name = "ListBuckets"
+  user = aws_iam_user.new_user.name
+  policy = <<EOF
+{
+  "Version": "2022-1-6",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListAllMyBuckets",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
