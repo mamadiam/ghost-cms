@@ -27,7 +27,7 @@ resource "aws_subnet" "subnet2" {
 
 resource "aws_eks_cluster" "main" {
   name     = "ghost-eks-cluster"
-  role_arn = aws_iam_role.eks_role.arn
+  role_arn = aws_iam_role.eks_role[0].arn
 
   vpc_config {
     subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
@@ -39,7 +39,7 @@ data "aws_iam_role" "eks_role" {
 }
 
 resource "aws_iam_role" "eks_role" {
-  count = length(data.aws_iam_role.eks_role.id) == 0 ? 1 : 0
+  count = length(data.aws_iam_role.eks_role.id) == 0? 1 : 0
   name = "eks_role"
 
   assume_role_policy = jsonencode({
@@ -55,20 +55,18 @@ resource "aws_iam_role" "eks_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
-  count     = length(data.aws_iam_role.eks_role.id) == 0 ? 1 : 0
-  role       = aws_iam_role.eks_role.name
+  count     = length(data.aws_iam_role.eks_role.id) == 0? 1 : 0
+  role       = aws_iam_role.eks_role[0].name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
 resource "aws_iam_user" "new_user" {
-  count = length(data.aws_iam_user.new_user.id) == 0 ? 1 : 0
   name = "GhostUser"
 
   lifecycle {
     create_before_destroy = true
   }
 }
-
 
 resource "aws_iam_access_key" "AccK" {
   user = aws_iam_user.new_user.name
