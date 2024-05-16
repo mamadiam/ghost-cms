@@ -1,0 +1,2 @@
+# ghost-cms
+ devops task
