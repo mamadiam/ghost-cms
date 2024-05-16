@@ -34,6 +34,12 @@ resource "aws_eks_cluster" "main" {
   }
 }
 
+  depends_on = [
+    aws_iam_role.eks_role_2,
+    aws_iam_access_key.AccK
+  ]
+}
+
 resource "aws_iam_role" "eks_role_2" {
   name = "eks_role_2"
 
@@ -69,20 +75,6 @@ resource "aws_iam_access_key" "AccK" {
 output "secret_key" {
   value     = aws_iam_access_key.AccK.secret
   sensitive = true
-}
-
-resource "aws_eks_cluster" "main" {
-  name     = "ghost-eks-cluster"
-  role_arn = aws_iam_role.eks_role_2.arn
-
-  vpc_config {
-    subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
-  }
-
-  depends_on = [
-    aws_iam_role.eks_role_2,
-    aws_iam_access_key.AccK
-  ]
 }
 
 output "access_key" {
