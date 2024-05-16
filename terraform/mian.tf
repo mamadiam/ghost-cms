@@ -8,8 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
-
+  region = "us-west-1"
 }
 
 resource "aws_vpc" "main" {
@@ -48,6 +47,10 @@ resource "aws_iam_role" "eks_role" {
       }
     }]
   })
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
@@ -57,6 +60,10 @@ resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
 
 resource "aws_iam_user" "new_user" {
   name = "GhostUser"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
