@@ -28,9 +28,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Save Terraform Outputs
-        id: save_outputs
-        run: |
-          echo "secret_key=$(terraform output -raw secret_key)" >> $GITHUB_ENV
-          echo "access_key=$(terraform output -raw access_key)" >> $GITHUB_ENV
-        working-directory: ./terraform
+      # - name: Save Terraform Outputs
+      #   id: save_outputs
+      #   run: |
+      #     echo "secret_key=$(terraform output -raw secret_key)" >> $GITHUB_ENV
+      #     echo "access_key=$(terraform output -raw access_key)" >> $GITHUB_ENV
+      #   working-directory: ./terraform
