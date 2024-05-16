@@ -9,8 +9,7 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  access_key = 
-  secret_key = 
+
 }
 
 resource "aws_vpc" "main" {
@@ -34,4 +33,19 @@ resource "aws_eks_cluster" "main" {
   vpc_config {
     subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
   }
+}
+
+resource "aws_iam_role" "eks_role" {
+  name = "eks_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action    = "sts:AssumeRole",
+      Effect    = "Allow",
+      Principal = {
+        Service = "eks.amazonaws.com"
+      }
+    }]
+  })
 }
