@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
 }
 
 resource "aws_iam_user" "new_user_2" {
-  name = "GhostUser_1"
+  name = "GhostUser_4"
 
   lifecycle {
     create_before_destroy = true
@@ -85,7 +85,7 @@ resource "aws_iam_user_policy" "iam" {
   user = aws_iam_user.new_user_2.name
   policy = <<EOF
 {
-  "Version": "2022-1-6",
+  "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
