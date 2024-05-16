@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "eks_policy_attachment" {
 }
 
 resource "aws_iam_user" "new_user_2" {
-  name = "GhostUser"
+  name = "GhostUser_1"
 
   lifecycle {
     create_before_destroy = true
