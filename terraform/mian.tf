@@ -15,3 +15,12 @@ resource "aws_subnet" "subnet2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.2.0/24"
 }
+
+resource "aws_eks_cluster" "main" {
+  name     = "ghost-eks-cluster"
+  role_arn = aws_iam_role.eks_role.arn
+
+  vpc_config {
+    subnet_ids = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+  }
+}
